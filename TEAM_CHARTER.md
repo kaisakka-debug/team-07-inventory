@@ -8,7 +8,7 @@
 | Theerut mueangsai  | theerutmu-sudo             | Scrum Master / Developer |
 | Piyanuch tangkittipon  | pyxdv             | Scrum Master / Developer |
 | Akkadech jaengpromma  | akkadechja             | Developer |
-| Kansinee daengtea  | kansineedaengtea             | Developer |
+| Kansinee daengtae  | kansineedaengtae             | Developer |
 | Kittiwin kaeophia  | kittiwinkaeophia            | Developer |
 
 
