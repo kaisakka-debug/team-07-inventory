@@ -20,9 +20,8 @@
 - ทุก PR ต้องมีคนอื่นในทีมอย่างน้อย 1 คน review และ approve ก่อน merge
 
 ## Sprint Goal (Sprint 1)
-
-(กรอกหลังขั้นที่ 5)
-
+Sprint Goal:
+"Sprint นี้ทีมจะส่งมอบระบบจัดการสต็อกสินค้า (US-01, US-02, US-03) ที่พนักงานสามารถดูรายการสินค้า เพิ่มสินค้าใหม่ และอัปเดตยอดคงเหลือได้จริง และผ่าน acceptance criteria ครบถ้วน"
 ## AI Usage Policy
 
 - ใช้ AI ช่วยเขียน draft code และ draft commit message ได้
