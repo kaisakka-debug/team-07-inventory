@@ -4,8 +4,10 @@
 
 | ชื่อ | GitHub Username | บทบาท |
 |---|---|---|
-| Kaisak kabklon  | kaisak Gp            | Product Owner |
+| Kaisak kabklon  | kaisak gp            | Product Owner |
 | Theerut mueangsai  | theerutmu-sudo             | Scrum Master / Developer |
+| Akkadech jaengpromma  | akkadechja             | Developer |
+| Akkadech jaengpromma  | akkadechja             | Developer |
 | Akkadech jaengpromma  | akkadechja             | Developer |
 
 ## Branching Strategy
