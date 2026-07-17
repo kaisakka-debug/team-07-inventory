@@ -6,9 +6,11 @@
 |---|---|---|
 | Kaisak kabklon  | kaisak gp            | Product Owner |
 | Theerut mueangsai  | theerutmu-sudo             | Scrum Master / Developer |
+| Piyanuch tangkittipon  | pyxdv             | Scrum Master / Developer |
 | Akkadech jaengpromma  | akkadechja             | Developer |
-| Akkadech jaengpromma  | akkadechja             | Developer |
-| Akkadech jaengpromma  | akkadechja             | Developer |
+| Kansinee daengtea  | kansineedaengtea             | Developer |
+| Kittiwin kaeophia  | kittiwinkaeophia            | Developer |
+
 
 ## Branching Strategy
 
