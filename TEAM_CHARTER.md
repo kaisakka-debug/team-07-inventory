@@ -4,9 +4,9 @@
 
 | ชื่อ | GitHub Username | บทบาท |
 |---|---|---|
-| ...  | ...             | Product Owner |
-| ...  | ...             | Scrum Master / Developer |
-| ...  | ...             | Developer |
+| Kaisak kabklon  | kaisak Gp            | Product Owner |
+| Theerut mueangsai  | theerutmu-sudo             | Scrum Master / Developer |
+| Akkadech jaengpromma  | akkadechja             | Developer |
 
 ## Branching Strategy
 
