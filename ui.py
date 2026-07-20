@@ -9,9 +9,21 @@ from inventory import Product
 EMPTY_MESSAGE = "ยังไม่มีสินค้าในระบบ"
 
 
+COLUMNS = [
+    ("รหัส", "id", 10),
+    ("ชื่อสินค้า", "name", 20),
+    ("จำนวนคงเหลือ", "quantity", 14),
+]
+
+
+def _row(values: List[str]) -> str:
+    cells = [f" {val:<{width - 1}}" for val, (_, _, width) in zip(values, COLUMNS)]
+    return "│" + "│".join(cells) + "│"
+
+
 def format_products_table(products: List[Product]) -> str:
     """
-    แปลงรายการสินค้าเป็นตารางข้อความสำหรับแสดงผล
+    แปลงรายการสินค้าเป็นตารางที่มีเส้นขอบสำหรับแสดงผลใน terminal
 
     AC-1: มีสินค้า -> แสดงชื่อ รหัส และจำนวนคงเหลือครบทุกรายการ
     AC-2: ไม่มีสินค้า -> แสดงข้อความ "ยังไม่มีสินค้าในระบบ" แทนรายการว่าง
@@ -19,10 +31,13 @@ def format_products_table(products: List[Product]) -> str:
     if not products:
         return EMPTY_MESSAGE
 
-    header = f"{'รหัส':<10}{'ชื่อสินค้า':<20}{'จำนวนคงเหลือ':<15}"
-    separator = "-" * len(header)
+    top = "┌" + "┬".join("─" * width for _, _, width in COLUMNS) + "┐"
+    header = _row([label for label, _, _ in COLUMNS])
+    header_sep = "├" + "┼".join("─" * width for _, _, width in COLUMNS) + "┤"
     rows = [
-        f"{p.id:<10}{p.name:<20}{p.quantity:<15}"
+        _row([str(getattr(p, field)) for _, field, _ in COLUMNS])
         for p in products
     ]
-    return "\n".join([header, separator, *rows])
+    bottom = "└" + "┴".join("─" * width for _, _, width in COLUMNS) + "┘"
+
+    return "\n".join([top, header, header_sep, *rows, bottom])
