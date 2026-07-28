@@ -48,8 +48,10 @@ def add_product():
 
     products.append(new_product)
     save_products(products)
-
-    print(f"[✓] เพิ่มสินค้า '{name}' (รหัส {code}) เรียบร้อยแล้ว\n")
+    
+    print("------------------------------------------------")
+    print(f"[✓] เพิ่มสินค้า '{name}' (รหัส {code}) เรียบร้อยแล้ว")
+    print("------------------------------------------------")
 
 
 if __name__ == "__main__":
