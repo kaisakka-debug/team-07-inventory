@@ -1,34 +1,60 @@
-"""
-us1.py
-------
-User Story 1:
-"ต้องการดูรายการสินค้าทั้งหมดพร้อมจำนวนคงเหลือ เพื่อตรวจสต็อกได้รวดเร็ว"
-"""
-
 from data_manager import load_products
+
+EMPTY_MESSAGE = "ยังไม่มีสินค้าในระบบ"
+
+# ปรับ COLUMNS ให้ตรงกับโครงสร้างข้อมูลของ us1.py
+COLUMNS = [
+    ("รหัส", "code", 10),
+    ("ชื่อสินค้า", "name", 20),
+    ("จำนวนคงเหลือ", "qty", 14),
+    ("หน่วย", "unit", 10),
+]
+
+
+def _row(values):
+    """สร้างแถวข้อมูลพร้อมจัดรูปแบบตามความกว้างคอลัมน์"""
+    cells = [f" {val:<{width - 1}}" for val, (_, _, width) in zip(values, COLUMNS)]
+    return "│" + "│".join(cells) + "│"
+
+
+def format_products_table(products):
+    """แปลงรายการสินค้าเป็นตารางแบบมีกรอบ (UI จาก ui.py)"""
+    if not products:
+        return EMPTY_MESSAGE
+
+    # สร้างส่วนหัวตาราง
+    top = "┌" + "┬".join("─" * width for _, _, width in COLUMNS) + "┐"
+    header = _row([label for label, _, _ in COLUMNS])
+    header_sep = "├" + "┼".join("─" * width for _, _, width in COLUMNS) + "┤"
+
+    # สร้าง rows
+    rows = []
+    for p in products:
+        warning = "⚠" if p["qty"] <= 5 else ""
+        row_values = [
+            p["code"],
+            p["name"],
+            f"{p['qty']} {warning}",
+            p["unit"],
+        ]
+        rows.append(_row(row_values))
+
+    bottom = "└" + "┴".join("─" * width for _, _, width in COLUMNS) + "┘"
+
+    return "\n".join([top, header, header_sep, *rows, bottom])
 
 
 def view_all_products():
     """แสดงรายการสินค้าทั้งหมดในรูปแบบตาราง พร้อมจำนวนคงเหลือ"""
     products = load_products()
 
-    if not products:
-        print("\n[!] ยังไม่มีสินค้าในระบบ\n")
-        return
+    print("\n" + format_products_table(products))
 
-    print("\n" + "=" * 60)
-    print(f"{'รหัส':<11}{'ชื่อสินค้า':<25}{'จำนวนคงเหลือ':<15}{'หน่วย':<10}")
-    print("=" * 60)
-
-    for p in products:
-        # เตือนถ้าสินค้าใกล้หมด (จำนวน <= 5) เพื่อให้ตรวจสต็อกได้ง่ายขึ้น
-        warning = " ⚠ ใกล้หมด" if p["qty"] <= 5 else ""
-        print(f"{p['code']:<10}{p['name']:<21}{p['qty']:<14}{p['unit']:<10}{warning}")
-
-    print("=" * 60)
-    print(f"รวมทั้งหมด {len(products)} รายการ\n")
-
+    if products:
+        print(f"\nรวมทั้งหมด {len(products)} รายการ\n")
+    else:
+        print()
+        
 
 if __name__ == "__main__":
-    # เผื่อรันไฟล์นี้เดี่ยว ๆ เพื่อทดสอบ
     view_all_products()
