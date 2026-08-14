@@ -5,11 +5,17 @@ main.py
 เชื่อมโยงการทำงานจากแต่ละ user story (us1.py - us5.py)
 """
 
-from us1 import view_all_products
-from us2 import add_product
-from us3 import update_quantity
-from us4 import search_product
-from us5 import export_csv
+# import แบบปลอดภัย เพื่อให้รู้ทันทีว่าไฟล์/ฟังก์ชันไหนมีปัญหา
+try:
+    from us1 import view_all_products
+    from us2 import add_product
+    from us3 import update_quantity
+    from us4 import search_product
+    from us5 import export_csv
+except ImportError as e:
+    print(f"\n[IMPORT ERROR] ไม่สามารถ import module/function ได้: {e}")
+    print("กรุณาตรวจสอบว่าไฟล์ us1.py - us5.py อยู่ในโฟลเดอร์เดียวกับ main.py")
+    raise
 
 
 def show_menu():
@@ -27,11 +33,11 @@ def show_menu():
 
 def main():
     actions = {
-        "1": view_all_products,
-        "2": add_product,
-        "3": update_quantity,
-        "4": search_product,
-        "5": export_csv,
+        "1": ("ดูรายการสินค้าทั้งหมด", view_all_products),
+        "2": ("เพิ่มสินค้าใหม่", add_product),
+        "3": ("แก้ไขจำนวนสินค้า", update_quantity),
+        "4": ("ค้นหาสินค้า", search_product),
+        "5": ("ส่งออก CSV", export_csv),
     }
 
     while True:
@@ -42,11 +48,17 @@ def main():
             print("\nขอบคุณที่ใช้บริการ ลาก่อน 👋\n")
             break
 
-        action = actions.get(choice)
-        if action:
-            action()
-        else:
+        selected = actions.get(choice)
+        if not selected:
             print("\n[!] กรุณาเลือกเมนูที่ถูกต้อง (0-5)\n")
+            continue
+
+        menu_name, action = selected
+        try:
+            print(f"\n>> กำลังทำงาน: {menu_name}")
+            action()
+        except Exception as e:
+            print(f"\n[ERROR] เกิดข้อผิดพลาดระหว่างทำเมนู '{menu_name}': {e}\n")
 
 
 if __name__ == "__main__":
