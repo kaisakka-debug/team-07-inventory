@@ -1,3 +1,4 @@
+from tabulate import tabulate
 from data_manager import load_products
 
 EMPTY_MESSAGE = "ยังไม่มีสินค้าในระบบ"
@@ -21,9 +22,9 @@ def format_products_table(products):
     headers = ["รหัส", "ชื่อสินค้า", "จำนวนคงเหลือ", "หน่วย"]
     rows = [
         [
-            p.get("id", ""),
+            p.get("code", ""),
             p.get("name", ""),
-            p.get("quantity", ""),
+            p.get("qty", ""),
             p.get("unit", ""),
         ]
         for p in products

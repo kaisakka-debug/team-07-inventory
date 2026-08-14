@@ -56,7 +56,17 @@ def main():
         menu_name, action = selected
         try:
             print(f"\n>> กำลังทำงาน: {menu_name}")
-            action()
+
+            if choice == "3":
+                code = input("รหัสสินค้า: ").strip()
+                print("1) รับเข้า")
+                print("2) จ่ายออก")
+                action_type = input("เลือกประเภท (1/2): ").strip()
+                amount_input = input("จำนวน: ").strip()
+                action(code, action_type, amount_input)
+            else:
+                action()
+
         except Exception as e:
             print(f"\n[ERROR] เกิดข้อผิดพลาดระหว่างทำเมนู '{menu_name}': {e}\n")
 

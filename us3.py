@@ -59,13 +59,13 @@ def update_quantity(code, action, amount_input):
     print(f"    จำนวนคงเหลือใหม่: {product['qty']} {product['unit']}\n")
 
 
-# ทดสอบร่วมกับ UI
-if __name__ == "__main__":
-    from ui_update_quantity import prompt_update_quantity   # ← UI ของคุณ
+# # ทดสอบร่วมกับ UI
+# if __name__ == "__main__":
+#     from ui_update_quantity import prompt_update_quantity   # ← UI ของคุณ
 
-    print("=== เริ่มการทดสอบ UI + Logic (Issue #16 + #17) ===")
+#     print("=== เริ่มการทดสอบ UI + Logic (Issue #16 + #17) ===")
 
-    code, action, amount_input = prompt_update_quantity()
+#     code, action, amount_input = prompt_update_quantity()
 
-    if code is not None:
-        update_quantity(code, action, amount_input)
+#     if code is not None:
+#         update_quantity(code, action, amount_input)
