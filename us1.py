@@ -18,37 +18,24 @@ def _row(values):
 
 
 def format_products_table(products):
-    """แปลงรายการสินค้าเป็นตารางแบบมีกรอบ (UI จาก ui.py)"""
-    if not products:
-        return EMPTY_MESSAGE
-
-    # สร้างส่วนหัวตาราง
-    top = "┌" + "┬".join("─" * width for _, _, width in COLUMNS) + "┐"
-    header = _row([label for label, _, _ in COLUMNS])
-    header_sep = "├" + "┼".join("─" * width for _, _, width in COLUMNS) + "┤"
-
-    # สร้าง rows
-    rows = []
-    for p in products:
-        warning = "⚠" if p["qty"] <= 5 else ""
-        row_values = [
-            p["code"],
-            p["name"],
-            f"{p['qty']} {warning}",
-            p["unit"],
+    headers = ["รหัส", "ชื่อสินค้า", "จำนวนคงเหลือ", "หน่วย"]
+    rows = [
+        [
+            p.get("id", ""),
+            p.get("name", ""),
+            p.get("quantity", ""),
+            p.get("unit", ""),
         ]
-        rows.append(_row(row_values))
-
-    bottom = "└" + "┴".join("─" * width for _, _, width in COLUMNS) + "┘"
-
-    return "\n".join([top, header, header_sep, *rows, bottom])
+        for p in products
+    ]
+    return tabulate(rows, headers=headers, tablefmt="grid", stralign="left", numalign="right")
 
 
 def view_all_products():
     """แสดงรายการสินค้าทั้งหมดในรูปแบบตาราง พร้อมจำนวนคงเหลือ"""
     products = load_products()
 
-    print("\n" + format_products_table(products))
+    print(format_products_table(products))
 
     if products:
         print(f"\nรวมทั้งหมด {len(products)} รายการ\n")
