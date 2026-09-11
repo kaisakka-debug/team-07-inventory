@@ -12,7 +12,6 @@ classDiagram
 
     class Category {
         +str name
-        +__post_init__() void
     }
 
     class Product {
@@ -21,9 +20,6 @@ classDiagram
         +int quantity
         +str category
         +int threshold
-        +list~str~ notification_channels
-        +dict~str, dict~ channel_config
-        +__post_init__() void
         +category_name: str
         +total_value: float
         +is_below_threshold() bool
@@ -35,7 +31,6 @@ classDiagram
         +int quantity
         +int resulting_quantity
         +datetime timestamp
-        +__post_init__() void
     }
 
     %% ==========================================
@@ -57,24 +52,26 @@ classDiagram
     }
 
     class NotifierFactory {
-        -dict~str, type~ _registry
+        -_registry: dict~str, type~
         +register(str channel_name, type notifier_cls) void
-        +create(str channel_name, **config) Notifier
+        +create(str channel, dict config) Notifier
     }
 
     %% ==========================================
     %% 3. SERVICE LAYER (service.py)
     %% ==========================================
     class InventoryService {
-        -NotifierFactory _notifier_factory
         -dict~str, Product~ _products
         -list~StockTransaction~ _transactions
+        -list~Notifier~ _observers
+        +add_observer(Notifier notifier) void
+        +remove_observer(Notifier notifier) void
+        -_notify_observers(str message) void
         +add_product(Product product) void
         +get_product(str product_name) Product
         +list_products() list~Product~
         +receive_stock(str product_name, int quantity) Product
         +issue_stock(str product_name, int quantity) Product
-        -_notify_low_stock(Product product) void
         +get_stock_value_report() dict
     }
 
@@ -89,23 +86,14 @@ classDiagram
     %% ==========================================
     %% RELATIONSHIPS
     %% ==========================================
-
-    %% Realization (Implementation of Interface/Protocol)
     Notifier <|.. EmailNotifier : realization
     Notifier <|.. SMSNotifier : realization
-
-    %% Composition (Strong Ownership/Lifetime Dependency)
-    InventoryService "1" *-- "*" Product : manages / contains
+    NotifierFactory ..> Notifier : creates
+    
+    InventoryService "1" o-- "*" Notifier : _observers (Observer Pattern)
+    InventoryService "1" *-- "*" Product : manages
     InventoryService "1" *-- "*" StockTransaction : records
-
-    %% Association / Aggregation
-    InventoryService "1" o-- "1" NotifierFactory : holds / uses
     StockTransaction "1" --> "1" TransactionType : transaction_type
 
-    %% Dependency
-    NotifierFactory ..> Notifier : creates
-    NotifierFactory ..> EmailNotifier : registers & creates
-    NotifierFactory ..> SMSNotifier : registers & creates
-    InventoryService ..> Notifier : sends notification via
     InventoryService ..> ProductNotFoundError : raises
     InventoryService ..> InsufficientStockError : raises
