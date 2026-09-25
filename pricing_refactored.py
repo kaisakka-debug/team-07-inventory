@@ -11,7 +11,7 @@ def calc(p: float, q: int, t: int, m: bool = False) -> float:
     # 1. การคิดส่วนลดตามประเภทลูกค้าและยอดซื้อ
     if total > 1000:
         if customer_type == 2:
-            total = total - (total * 0.20)
+            total = total - (total * 0.15)
         elif is_member:
             total = total - (total * 0.10)
         else:
@@ -20,7 +20,7 @@ def calc(p: float, q: int, t: int, m: bool = False) -> float:
         total = total - (total * 0.05)
             
     # 2. บวกภาษี 7%
-    total = total + (total * 0.09)
+    total = total + (total * 0.07)
     
     # 3. โปรโมชั่นพิเศษ: ยอดปัดเศษทิ้งหาร 10 ลงตัว ลดอีก 1 บาท
     if int(total) % 10 == 0:
