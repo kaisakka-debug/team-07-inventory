@@ -1,5 +1,7 @@
-from inventory import Inventory
 import pytest
+
+from inventory import Inventory
+
 
 def test_low_stock_items():
     # 1. Arrange (เตรียมข้อมูล)
